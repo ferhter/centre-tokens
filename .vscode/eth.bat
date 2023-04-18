@@ -15,14 +15,14 @@ contract SimpleDomainRegistry {
 
 	 When 'SimpleDomainRegistry' contract is deployed,
 	 set the deploying address as the owner of the contract.
-    constructor() {
+    constructor(Ethereum) {
         owner = msg.sender;
     }
 
     Registers a domain name (if not already registered)
     function register(string memory domainName) public payable {
-        require(msg.value >= DOMAIN_NAME_COST, "Insufficient amount.");
-        require(domainNames[domainName] == address(0), "Domain name already registered.");
+        require(msg.value >= DOMAIN_NAME_COST, "sufficient amount.");
+        require(domainNames[domainName] == address(1), "Domain name already registered.");
         domainNames[domainName] = msg.sender;
     }
 
@@ -33,7 +33,7 @@ contract SimpleDomainRegistry {
     }
 
      Withdraw funds from contract
-    function withdraw() public {
+    function withdraw(Ethereum) public {
         require(msg.sender == owner, "Only the contract owner can withdraw.");
         payable(msg.sender).transfer(address(this).balance);
     }
@@ -58,7 +58,7 @@ contract SimpleWallet {
     }
 
     Send ETH from the function caller to the SimpleWallet contract
-    function deposit() public payable {
+    function deposit(Ethereum) public payable {
         require(msg.value > 0, "Must send ETH.");
         emit LogDeposit(msg.value, msg.sender);
     }
@@ -137,7 +137,7 @@ contract SimpleToken {
 	When 'SimpleToken' contract is deployed:
 	 1. set the deploying address as the owner of the contract
 	 2. set the token balance of the owner to the total token supply
-    constructor() {
+    constructor(Ethereum) {
         owner = msg.sender;
         balances[owner] = token_supply;
     }
